@@ -1,47 +1,61 @@
 // This component represent every TODO-Items inside of our List
 import React, {useState} from "react";
 
-const Todo = () => {
+const Todo = ({title}) => {
 
     const [istEditing, setIstEditing] = useState(false);  // By default we will like to see the Todo-items
+    const [value, setValue]  = useState(title);
+    const [tempValue, setTempValue] = useState(title);
 
     const handleDOubleClick = () =>{
         setIstEditing(true);
     };
 
-    const handleInputKeyDown = (e) =>{
-        const key = e.keyCode;
+    const handleInputKeyDown = (el) =>{
+        const key = el.keyCode;
 
-        if (key === 13 || key === 27){ // Enter and Exist(ESC) keycodes
+        if (key === 13 ){ // Enter and Exist(ESC) keycodes
+            setValue(tempValue); // original Value = tempValue
+            setIstEditing(false);
+        }else if (key === 27){
+            setValue(value); // set to the initial value 
             setIstEditing(false);
         }
     };
+
+    const handleInputOnChange = (eo) =>{
+        setTempValue(eo.target.value);
+    }
     
     return (
         // {}= indicate a js expression it is use only if i want to whrite a JS inside of a jsx context
         // If istEditing = true render the input-tag otherwise render a row 
-        istEditing ?
-            <div className= "row" onDoubleClick={handleDOubleClick}>
+        <div className= "row" onDoubleClick={handleDOubleClick}>
+            {
+            istEditing ?
+                
                 <div className= "column seven wide">
                     <div className= "ui input fluid">
-                        <input onKeyDown={handleInputKeyDown}></input>
+                        <input onChange={handleInputOnChange} onKeyDown={handleInputKeyDown} autoFocus= {true} value= {tempValue}></input>
                     </div> 
                 </div>                             
-            </div>
-            :
-            <div className= "row" onDoubleClick={handleDOubleClick}>
-                <div className= "column five wide">
-                    <h2> Test </h2>
-                </div>
+               
+                :
+                <>
+                    <div className= "column five wide">
+                        <h2> {value} </h2>
+                    </div>
 
-                <div className= "column one wide">
-                    <button className= "ui button circular icon green"><i className= "check icon"></i></button>
-                </div>
+                    <div className= "column one wide">
+                        <button className= "ui button circular icon green"><i className= "check icon"></i></button>
+                    </div>
 
-                <div className= "column one wide">
-                    <button className= "ui button circular icon red"><i className= "remove icon"></i></button>
-                </div>
-            </div>
+                    <div className= "column one wide">
+                        <button className= "ui button circular icon red"><i className= "remove icon"></i></button>
+                    </div>
+                </>
+            }
+        </div>
         
     );
 };
