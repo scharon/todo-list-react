@@ -38,7 +38,12 @@ const App = () => {
   };
 
   const removeTodo = (id) => {
+    setTodoList((oldList) => oldList.filter((item) => item.id !== id));
+    // setTodoList((oldList) => {
+    //   oldList.filter((item) => {
 
+    //   }))
+    // } 
   };
 
   return (
