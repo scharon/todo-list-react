@@ -6,6 +6,7 @@ const Todo = ({title}) => {
     const [istEditing, setIstEditing] = useState(false);  // By default we will like to see the Todo-items
     const [value, setValue]  = useState(title);
     const [tempValue, setTempValue] = useState(title);
+    const [completedState, setCompleted] = useState(false);
 
     const handleDOubleClick = () =>{
         setIstEditing(true);
@@ -25,7 +26,12 @@ const Todo = ({title}) => {
 
     const handleInputOnChange = (eo) =>{
         setTempValue(eo.target.value);
-    }
+    };
+
+    //ability to mark the todo-item as completed
+    const handleButtonClick = (eh) =>{
+        setCompleted(true);
+    };
     
     return (
         // {}= indicate a js expression it is use only if i want to whrite a JS inside of a jsx context
@@ -43,11 +49,16 @@ const Todo = ({title}) => {
                 :
                 <>
                     <div className= "column five wide">
-                        <h2> {value} </h2>
+                        <h2 className= {"ui header" + (completedState ? " green" : "")}> {value} </h2>
                     </div>
 
                     <div className= "column one wide">
-                        <button className= "ui button circular icon green"><i className= "check icon"></i></button>
+                        <button 
+                            className= "ui button circular icon green"
+                            onClick= {handleButtonClick}
+                            >
+                            <i className= "check icon"></i>
+                        </button>
                     </div>
 
                     <div className= "column one wide">

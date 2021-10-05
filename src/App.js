@@ -1,27 +1,42 @@
-import React from 'react';
-
+import React, {useState} from 'react';
 import Form from './components/Form';
 import Section from './components/Section';
 import List from './components/List';
 
+//Simulate the data that we fetch from  our database 
+const list = [
+  {
+    title: "Test 1", 
+    completed: false
+  },
+  {
+    title:"Test 2",
+    completed: false
+  },
+  {
+    title:"Test 3",
+    completed: false
+  }
+];
 
 const appTitle = "To-DO-List App";
+
 const App = () => {
+
+  const [todoList, setTodoList] = useState(list);
+
   return (
     <div className="ui container center aligned">
-      <Section>
-      
-      </Section>
+      <Section></Section>
       <h1>{appTitle}</h1>
-
+     
       {/* <br></br> pas elegant en programmation */}
+      
+      <Section></Section>
       <Form></Form>
 
-      <Section>
-        
-      </Section>
-
-      <List></List>
+      <Section></Section> 
+      <List list= {todoList} ></List>
     </div> 
   
   )};
