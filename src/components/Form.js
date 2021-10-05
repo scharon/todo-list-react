@@ -1,16 +1,28 @@
 import React, {useState} from "react";
 
-const Form = () => {
+const Form = ({addTodoItem}) => {
     //Declare a new state varieable 
     const [inputValue, setInputvalue] = useState("");
 
     //create event handler
     const handleInputChange = (e) => {
         setInputvalue(e.target.value);
-    }
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault(); //add item without the hole page refreshing 
+
+        if(inputValue.trim() === ""){
+           return; 
+        }else{
+            addTodoItem({title: inputValue, completed: false});
+        }        
+        setInputvalue(""); // Emtying the input
+    };
+
 
     return (
-        <form className="ui form">
+        <form className="ui form" onSubmit= {handleFormSubmit}>
             <div className = "ui grid center aligned"> {/*la class center aligned centre  */}
                 <div className= "row">
                     <div className = "column five wide"> {/*size of column it is 16 columns */}

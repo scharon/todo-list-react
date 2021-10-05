@@ -6,24 +6,40 @@ import List from './components/List';
 //Simulate the data that we fetch from  our database 
 const list = [
   {
+    id: 1,
     title: "Test 1", 
     completed: false
   },
   {
+    id: 2,
     title:"Test 2",
     completed: false
   },
   {
+    id: 3,
     title:"Test 3",
     completed: false
   }
 ];
+
+// const addTodo = () =>{
+//   list.push({ title: "Test 4"});
+// }
 
 const appTitle = "To-DO-List App";
 
 const App = () => {
 
   const [todoList, setTodoList] = useState(list);
+
+  const addTodo = (item) =>{
+   // setTodoList((oldList) => oldList.concat(item));
+    setTodoList((oldList) => [...oldList, item]); // concat Array in ES6
+  };
+
+  const removeTodo = (id) => {
+
+  };
 
   return (
     <div className="ui container center aligned">
@@ -33,33 +49,12 @@ const App = () => {
       {/* <br></br> pas elegant en programmation */}
       
       <Section></Section>
-      <Form></Form>
+      <Form addTodoItem= {addTodo}></Form>
 
       <Section></Section> 
-      <List list= {todoList} ></List>
+      <List removeTodoItem= {removeTodo} list= {todoList} ></List>
     </div> 
   
   )};
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
