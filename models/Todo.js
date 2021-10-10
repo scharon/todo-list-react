@@ -6,4 +6,4 @@ const TodoSchema = new mongoose.Schema({
 });
 
 //mongoose.model("Todo", TodoSchema); // Todo = todos in mgdb
-module.export = mongoose.model("Todo", TodoSchema);
+module.exports = mongoose.model("Todo", TodoSchema);
