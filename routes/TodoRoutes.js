@@ -11,8 +11,18 @@ router.get("/", (req, res) => {
 });
 
 router.post("/new", (req, res) => {
-    console.log(req.body); // whole json-Object
-    console.log(req.body.completed);
+    Todo.create(req.body, (err, result) => {
+        if(err) throw new Error(err);
+        console.log(result);
+        //Validation ...
+    });
+});
+
+router.delete("/remove", (req, res) => {
+    Todo.findOneAndRemove({ _id: req.body.id }, (err, result) => {
+        if(err) throw new Error(err);
+        console.log(result);
+    });
 });
 
 module.exports = router;
