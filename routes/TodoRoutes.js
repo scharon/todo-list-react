@@ -15,6 +15,7 @@ router.post("/", (req, res) => {
         if(err) throw new Error(err);
         //console.log(result);
         res.json(result);
+        //Validation 
     });
 });
 
