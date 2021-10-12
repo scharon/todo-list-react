@@ -10,7 +10,7 @@ const Form = ({addTodoItem}) => {
     };
 
     const handleFormSubmit = (e) => {
-        e.preventDefault(); //add item without the hole page refreshing 
+        e.preventDefault(); //add item without the whole page refreshing 
 
         if(inputValue.trim() === ""){
            return; 
