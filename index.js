@@ -13,7 +13,7 @@ mongoose.connect(url, connectionOptions)
     .then(() => console.log("connected successfully"))
     .catch((err) => console.error(err));
 
-app.use("/todo", todoRoutes);// Base path /todo/
+app.use("/todos", todoRoutes);// Base path /todo/
 
 app.listen(PORT, () => {
     console.log("The server is listeneing on port", PORT);
