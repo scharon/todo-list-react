@@ -1,7 +1,7 @@
 // This component represent every TODO-Items inside of our List
 import React, {useState} from "react";
 
-const Todo = ({title, completed, removeTodoItemProp}) => {
+const Todo = ({title, completed, removeTodoItemProp, editTodoItemProp}) => {
 
     const [istEditing, setIstEditing] = useState(false);  // By default we will like to see the Todo-items
     const [value, setValue]  = useState(title);
@@ -17,7 +17,8 @@ const Todo = ({title, completed, removeTodoItemProp}) => {
         const key = el.keyCode;
 
         if (key === 13 ){ // Enter and Exist(ESC) keycodes
-            setValue(tempValue); // original Value = tempValue
+            editTodoItemProp({title: tempValue});
+            setValue(tempValue); // original Value = tempValue hat our modifications 
             setIstEditing(false);
         }else if (key === 27){
             setValue(value); // set to the initial value 
@@ -32,7 +33,11 @@ const Todo = ({title, completed, removeTodoItemProp}) => {
 
     //ability to mark the todo-item as completed
     const handleButtonClick = () =>{
-        setCompleted((oldCompleted) => !oldCompleted); // recieving the updated version of the completed setvariable 
+        setCompleted((oldCompleted) => {
+            const newState = !oldCompleted;
+            editTodoItemProp({completed: newState});
+            return newState;
+        }); // recieving the updated version of the completed setvariable 
     };
     
     return (

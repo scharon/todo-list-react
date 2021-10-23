@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'; // library use to fecht Data from our database
+//import axios from 'axios'; // library use to fecht Data from our database
+import todos from './apis/index'; // ./apis/index
 
 import Form from './components/Form';
 import Section from './components/Section';
@@ -33,30 +34,38 @@ const appTitle = "To-DO-List App";
 const App = () => {
   const [todoList, setTodoList] = useState([]);
 
+  // Fetching Data from our Database 
   useEffect(() => {
+
+    // async function () {
+    // const response = await axios.get("http://localhost:4141/todos/");
+    // }();
     async function fetchData() {
       //const response = await axios.get("http://localhost:4141/todos/");
       //console.log(response);
-      const {data} = await axios.get("http://localhost:4141/todos/");
+      const {data} = await todos.get("/todos");
       setTodoList(data);
       
     }
-    
     fetchData();
 
-    // async function () {
-    //   const response = await axios.get("http://localhost:4141/todos/");
-    // }();
   }, []);
 
-  const addTodo = (item) =>{
+  const addTodo = async (item) =>{
+    const {data} = await todos.post("/todos", item); // Because we r most interested on the data and not anything else, we gonna destructured the data propertie au lieu de response object
    // setTodoList((oldList) => oldList.concat(item));
-    setTodoList((oldList) => [...oldList, item]); // concat Array in ES6
+    setTodoList((oldList) => [...oldList, data]); // concat Array in ES6, data that we recieve from our server
   };
 
-  const removeTodo = (id) => {
-    setTodoList((oldList) => oldList.filter((item) => item.id !== id));
+  const removeTodo = async (id) => {
+    await todos.delete("/todos/" + id); // /todos/:id
+    setTodoList((oldList) => oldList.filter((item) => item._id !== id));
   };
+
+  const editTodo = async (id, item) => {
+    const {data} =  await todos.put(`/todos/${id}`, item);
+
+  }
 
   return (
     <div className="ui container center aligned">
@@ -69,7 +78,11 @@ const App = () => {
       <Form addTodoItem= {addTodo}></Form>
 
       <Section></Section> 
-      <List removeTodoItem= {removeTodo} list= {todoList} ></List>
+      <List 
+        editTodoListProp = {editTodo}
+        removeTodoItem= {removeTodo} 
+        list= {todoList} >
+      </List>
     </div> 
   
   )};
